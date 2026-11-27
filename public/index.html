@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>AMPYFLY — Amplify Your Reach. Mobilize Your Crowd.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0A2540;
+      --abyss: #051221;
+      --surface: #0D2E4F;
+      --card-dark: #091D33;
+      --cyan: #38BDF8;
+      --coral: #FF5733;
+      --ticket: #F8FAFC;
+      --ink: #0A2540;
+      --muted: #94A3B8;
+      --border: rgba(56, 189, 248, 0.18);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--abyss);
+      color: #FFFFFF;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background-image:
+        radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.16), transparent 52%),
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 44px 44px, 44px 44px;
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
+    }
+    h1, h2, h3, .display { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    input, textarea, select {
+      font-family: inherit;
+      background: rgba(5, 18, 33, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: #FFFFFF;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 14px;
+      width: 100%;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--cyan); }
+
+    /* Top Bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(5, 18, 33, 0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+    }
+    .topbar-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 19px; letter-spacing: 0.04em; }
+    .top-stats { display: flex; align-items: center; gap: 8px; }
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(10, 37, 64, 0.9);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .stat-pill.xp { color: var(--cyan); }
+    .stat-pill.usd { color: #4ADE80; }
+    .settings-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: rgba(10, 37, 64, 0.95);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .settings-btn:hover { border-color: var(--cyan); transform: translateY(-1px); }
+
+    /* Container */
+    .container { max-width: 1140px; margin: 0 auto; padding: 28px 18px 20px; }
+    .view { display: none; }
+    .view.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Hero */
+    .hero { text-align: center; padding: 18px 0 28px; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .hero h1 { font-size: clamp(32px, 6vw, 58px); line-height: 1.06; font-weight: 800; max-width: 780px; margin: 0 auto 14px; }
+    .hero h1 span { color: var(--cyan); }
+    .hero p { color: #CBD5E1; font-size: clamp(15px, 2.2vw, 18px); max-width: 650px; margin: 0 auto 24px; line-height: 1.55; }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.18s ease;
+    }
+    .btn-primary { background: var(--cyan); color: var(--abyss); }
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn-secondary { background: rgba(10, 37, 64, 0.9); border: 1px solid var(--border); color: #FFFFFF; }
+    .btn-secondary:hover { border-color: var(--cyan); }
+    .btn-coral { background: var(--coral); color: #FFFFFF; }
+
+    /* 3D Fanned Hero Deck */
+    .fanned-deck {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0;
+      margin: 34px auto 40px;
+      padding: 10px 8px 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .fanned-deck::-webkit-scrollbar { display: none; }
+    .deck-card {
+      width: 210px;
+      min-width: 190px;
+      height: 248px;
+      border-radius: 22px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      transition: transform 0.25s ease, z-index 0.2s;
+      margin-left: -24px;
+      position: relative;
+      text-align: left;
+    }
+    .deck-card:first-child { margin-left: 0; }
+    .deck-card:nth-child(1) { transform: rotate(-6deg) translateY(14px); background: linear-gradient(155deg, #133558, #0A2540); }
+    .deck-card:nth-child(2) { transform: rotate(-3deg) translateY(5px); background: linear-gradient(155deg, #164E63, #0A2540); }
+    .deck-card:nth-child(3) { transform: translateY(-10px) scale(1.05); z-index: 4; background: linear-gradient(155deg, #0EA5E9, #0A2540); border-color: var(--cyan); }
+    .deck-card:nth-child(4) { transform: rotate(3deg) translateY(5px); background: linear-gradient(155deg, #7C2D12, #0A2540); }
+    .deck-card:nth-child(5) { transform: rotate(6deg) translateY(14px); background: linear-gradient(155deg, #1E1B4B, #0A2540); }
+    .deck-card:hover { transform: translateY(-18px) scale(1.07) rotate(0deg); z-index: 10; }
+    @media (max-width: 720px) {
+      .fanned-deck { justify-content: flex-start; gap: 12px; padding-left: 4px; }
+      .deck-card { margin-left: 0; transform: none !important; height: 220px; }
+    }
+
+    /* Section Headers & Filters */
+    .section-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 24px 0 16px; }
+    .filter-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(10, 37, 64, 0.8);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .filter-pill.active { background: var(--cyan); color: var(--abyss); border-color: var(--cyan); }
+
+    /* Sports-Editorial Split Ticket Cards */
+    .quest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+    .ticket-card {
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--card-dark);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease, border-color 0.18s ease;
+    }
+    .ticket-card:hover { transform: translateY(-3px); border-color: var(--cyan); }
+    .ticket-top { padding: 18px 18px 14px; position: relative; }
+    .ticket-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .status-chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .status-LIVE { background: rgba(56, 189, 248, 0.18); color: var(--cyan); border: 1px solid rgba(56, 189, 248, 0.45); }
+    .status-ENDED { background: rgba(148, 163, 184, 0.16); color: #CBD5E1; border: 1px solid rgba(148, 163, 184, 0.3); }
+    .status-UPCOMING { background: rgba(255, 87, 51, 0.18); color: #FFA28B; border: 1px solid rgba(255, 87, 51, 0.4); }
+    .ticket-title { font-size: 19px; font-weight: 800; line-height: 1.25; margin-bottom: 8px; }
+    .ticket-desc { font-size: 13px; color: #CBD5E1; line-height: 1.5; }
+    .ticket-bottom {
+      margin-top: auto;
+      background: var(--ticket);
+      color: var(--ink);
+      padding: 14px 18px;
+      border-top: 2px dashed rgba(10, 37, 64, 0.18);
+    }
+    .ticket-stats { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .reward-big { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 800; color: var(--navy); }
+    .ticket-sub { font-size: 12px; font-weight: 600; color: #475569; }
+    .ticket-cta {
+      width: 100%;
+      padding: 11px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .cta-live { background: var(--coral); color: #FFFFFF; }
+    .cta-ended { background: var(--navy); color: #FFFFFF; }
+    .cta-upcoming { background: #E2E8F0; color: var(--navy); }
+
+    /* Cards & Panels */
+    .panel {
+      background: rgba(10, 37, 64, 0.72);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 22px; }
+    .kpi-box { background: rgba(9, 29, 51, 0.9); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
+    .kpi-val { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 800; color: var(--cyan); }
+    .kpi-lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* Alpha Feed */
+    .alpha-card {
+      background: rgba(9, 29, 51, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    .alpha-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
+    .upvote-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--cyan);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* Compact Frosted-Glass iPhone Floating Pill Dock */
+    .dock-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      padding: 0 12px;
+    }
+    .glass-dock {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 54px;
+      padding: 5px;
+      border-radius: 999px;
+      background: rgba(241, 246, 255, 0.84);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .dock-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 44px;
+      padding: 0 15px;
+      border-radius: 999px;
+      color: #0A2540;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      white-space: nowrap;
+    }
+    .dock-item svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .dock-item.active {
+      background: #0A2540;
+      color: #FFFFFF;
+      box-shadow: 0 6px 14px rgba(10, 37, 64, 0.35);
+    }
+    .dock-item.active svg { color: var(--cyan); }
+    @media (max-width: 420px) {
+      .dock-item { padding: 0 12px; font-size: 12px; gap: 5px; }
+    }
+
+    /* Footer */
+    .site-footer {
+      max-width: 1140px;
+      margin: 40px auto 12px;
+      padding: 22px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .x-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(10, 37, 64, 0.9);
+      border: 1px solid var(--border);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: 700;
+      transition: border-color 0.15s;
+    }
+    .x-link:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* Drawers & Modals */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.72);
+      backdrop-filter: blur(6px);
+      z-index: 70;
+      display: none;
+      justify-content: flex-end;
+    }
+    .overlay.open { display: flex; }
+    .drawer {
+      width: min(460px, 100%);
+      height: 100%;
+      background: #07192D;
+      border-left: 1px solid var(--border);
+      padding: 22px 20px 40px;
+      overflow-y: auto;
+    }
+    .modal-wrap {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.78);
+      backdrop-filter: blur(6px);
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-wrap.open { display: flex; }
+    .modal {
+      width: min(560px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #07192D;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+    }
+    .field { margin-bottom: 13px; }
+    .field label { display: block; font-size: 12px; font-weight: 700; color: #CBD5E1; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .task-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(5, 18, 33, 0.75);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .task-row.done { border-color: #4ADE80; background: rgba(74, 222, 128, 0.08); }
+    .toast {
+      position: fixed;
+      top: 76px;
+      right: 18px;
+      z-index: 100;
+      background: var(--cyan);
+      color: var(--abyss);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      display: none;
+    }
+    .toast.show { display: block; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  </style>
+</head>
+<body>
+  <!-- TOP STATUS BAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="brand-lockup" onclick="switchView('home')" aria-label="AMPYFLY Home">
+        <svg width="30" height="30" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M32 6L8 56H20L29 36L24 36L32 20L36 28L44 21L32 6Z" fill="#FFFFFF"/>
+          <path d="M46 12L18 54H30L51 12H46Z" fill="#38BDF8"/>
+          <path d="M44 29L37 41L46 39L41 44L47 56H58L49 38L57 32L44 29Z" fill="#FFFFFF"/>
+        </svg>
+        <span>AMPYFLY</span>
+      </button>
+
+      <div class="top-stats">
+        <div class="stat-pill xp" id="topXp">⚡ 0 XP</div>
+        <div class="stat-pill usd" id="topUsd">$0.00</div>
+        <button class="settings-btn" onclick="openSettings()" aria-label="Open Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- VIEW 1: HOMEPAGE -->
+    <section id="view-home" class="view active">
+      <div class="hero">
+        <div class="hero-badge">4-Layer Anti-Bot Verified Growth</div>
+        <h1><span>Amplify</span> Your Reach. Mobilize Your <span>Crowd.</span></h1>
+        <p>The human-powered user acquisition, UGC, &amp; quest engine for Gaming, AI, Web3 &amp; Fintech.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="switchView('quests')">Explore Quests</button>
+          <button class="btn btn-secondary" onclick="switchView('brands')">Launch a Brand Sprint</button>
+        </div>
+      </div>
+
+      <div class="fanned-deck" id="fannedDeck"></div>
+
+      <div class="kpi-grid">
+        <div class="kpi-box"><div class="kpi-val">4,100+</div><div class="kpi-lbl">Verified Sprint Participants</div></div>
+        <div class="kpi-box"><div class="kpi-val">93.2%</div><div class="kpi-lbl">Scout QA Approval Quality</div></div>
+        <div class="kpi-box"><div class="kpi-val">2–12 Days</div><div class="kpi-lbl">High-Velocity Execution</div></div>
+        <div class="kpi-box"><div class="kpi-val">0 Bots</div><div class="kpi-lbl">4-Layer Sybil Shield</div></div>
+      </div>
+
+      <div class="section-head">
+        <h2>Featured &amp; Past Sprints</h2>
+        <button class="btn btn-secondary" onclick="switchView('quests')">View All</button>
+      </div>
+      <div class="quest-grid" id="homeQuestGrid"></div>
+    </section>
+
+    <!-- VIEW 2: QUESTS -->
+    <section id="view-quests" class="view">
+      <div class="section-head">
+        <div>
+          <h2>Quest Arena</h2>
+          <p style="color:var(--muted);font-size:14px;margin-top:4px;">Complete modular quests, climb Trust Tiers, and unlock verified rewards.</p>
+        </div>
+        <div class="filter-pills" id="questFilters">
+          <button class="filter-pill active" onclick="setQuestFilter('ALL', this)">All</button>
+          <button class="filter-pill" onclick="setQuestFilter('LIVE', this)">Live</button>
+          <button class="filter-pill" onclick="setQuestFilter('ENDED', this)">Ended</button>
+          <button class="filter-pill" onclick="setQuestFilter('UPCOMING', this)">Upcoming</button>
+        </div>
+      </div>
+      <div class="quest-grid" id="allQuestGrid"></div>
+    </section>
+
+    <!-- VIEW 3: ALPHA FEED -->
+    <section id="view-alpha" class="view">
+      <div class="section-head">
+        <div>
+          <h2>Community Alpha Feed</h2>
+          <p style="color:var(--muted);font-size:14px;margin-top:4px;">Share early market calls, gaming drops, and AI alpha. Earn +50 XP per verified post.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="grid-2">
+          <div class="field">
+            <label>Sector</label>
+            <select id="alphaSector">
+              <option>Gaming</option>
+              <option>AI</option>
+              <option>Web3</option>
+              <option>Fintech</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Your Handle</label>
+            <input id="alphaHandle" placeholder="@yourhandle" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Drop High-Signal Alpha</label>
+          <textarea id="alphaInput" rows="3" placeholder="Share an early opportunity, beta test, or creator insight..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="publishAlpha()">Publish Alpha (+50 XP)</button>
+      </div>
+
+      <div id="alphaList"></div>
+    </section>
+
+    <!-- VIEW 4: PROFILE -->
+    <section id="view-profile" class="view">
+      <div class="panel" id="profileHero"></div>
+      <div class="kpi-grid" id="profileKpis"></div>
+      <div class="panel">
+        <h3 style="margin-bottom:12px;">4-Layer Anti-Bot Identity Status</h3>
+        <div class="task-row done"><span>Layer 1 — Invisible Bot Shield &amp; OAuth</span><strong style="color:#4ADE80;">ACTIVE</strong></div>
+        <div class="task-row done"><span>Layer 2 — Device &amp; 1-to-1 Payout Lock</span><strong style="color:#4ADE80;">LOCKED</strong></div>
+        <div class="task-row"><span>Layer 3 — Human Pass &amp; AMP Scout Vouch</span><strong style="color:var(--cyan);">TIER 1 → TIER 2</strong></div>
+        <div class="task-row"><span>Layer 4 — 24–72h Audit Window Protection</span><strong style="color:#CBD5E1;">ENABLED</strong></div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: FOR BRANDS -->
+    <section id="view-brands" class="view">
+      <div class="hero" style="padding-bottom:18px;">
+        <div class="hero-badge">For Brands &amp; Ecosystem Partners</div>
+        <h1><span>Amplify</span> Your Reach. Mobilize Your <span>Crowd.</span></h1>
+        <p>The human-powered user acquisition, UGC, &amp; quest engine for Gaming, AI, Web3 &amp; Fintech.</p>
+      </div>
+
+      <div class="quest-grid" style="margin-bottom:24px;">
+        <div class="panel">
+          <h3 style="color:var(--cyan);margin-bottom:8px;">Growth Sprint (2–7 Days)</h3>
+          <p style="font-size:14px;color:#CBD5E1;line-height:1.55;">Guaranteed verified votes, app installs, early testers, or clan signups backed by a live read-only Client Proof Dashboard.</p>
+        </div>
+        <div class="panel">
+          <h3 style="color:var(--cyan);margin-bottom:8px;">UGC &amp; Creator Blitz (5–14 Days)</h3>
+          <p style="font-size:14px;color:#CBD5E1;line-height:1.55;">20–50+ coordinated creator threads, TikToks, and gaming videos generating real organic impressions without fake engagement pods.</p>
+        </div>
+        <div class="panel">
+          <h3 style="color:var(--cyan);margin-bottom:8px;">Full-Stack Launch (30 Days)</h3>
+          <p style="font-size:14px;color:#CBD5E1;line-height:1.55;">Custom modular quest portal campaign, creator blitz, WhatsApp/Discord/TG affiliate mobilization, and Scout QA auditing.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 style="margin-bottom:6px;">Submit Campaign Brief</h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Responses route directly to <strong>ampyflybusiness@gmail.com</strong>.</p>
+        <form id="briefForm" onsubmit="submitBrief(event)">
+          <div class="grid-2">
+            <div class="field"><label>Brand / Project Name</label><input id="bCompany" required placeholder="Acme Labs" /></div>
+            <div class="field"><label>Work Email</label><input id="bEmail" type="email" required placeholder="founder@project.com" /></div>
+            <div class="field"><label>Sector</label><select id="bSector"><option>Gaming</option><option>AI</option><option>Web3</option><option>Fintech</option><option>Web2 Tech</option></select></div>
+            <div class="field"><label>Package</label><select id="bPkg"><option>Growth Sprint (2–7 Days)</option><option>UGC & Creator Blitz (5–14 Days)</option><option>Full-Stack Launch (30 Days)</option></select></div>
+            <div class="field"><label>Estimated Budget</label><input id="bBudget" required placeholder="e.g. $1,500 – $5,000" /></div>
+            <div class="field"><label>Target Timeline</label><input id="bTimeline" required placeholder="e.g. Next 7 days" /></div>
+          </div>
+          <div class="field"><label>Campaign KPI &amp; Goal</label><textarea id="bGoal" rows="3" required placeholder="Tell us the verified actions, signups, or creator deliverables you need..."></textarea></div>
+          <button type="submit" class="btn btn-primary">Send Brief to AMPYFLY</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- HIDDEN VIEW 6: PRIVATE OPS / ADMIN PORTAL (Accessible ONLY via /#ops) -->
+    <section id="view-ops" class="view">
+      <div id="adminLoginGate" class="panel" style="max-width:440px;margin:24px auto;">
+        <h2 style="margin-bottom:6px;">AMPYFLY Ops Gate</h2>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Server-authenticated access only. Credentials are verified via bcrypt &amp; HttpOnly JWT cookies.</p>
+        <form onsubmit="adminLogin(event)">
+          <div class="field"><label>Admin Email</label><input id="admEmail" type="email" required autocomplete="username" /></div>
+          <div class="field"><label>Admin Password</label><input id="admPass" type="password" required autocomplete="current-password" /></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Authenticate</button>
+        </form>
+      </div>
+
+      <div id="adminWorkspace" style="display:none;">
+        <div class="section-head">
+          <div>
+            <h2>Autonomous Admin Command Center</h2>
+            <p style="color:var(--muted);font-size:13px;">KGeN-grade modular campaign builder, Scout QA queue, and brand brief inbox.</p>
+          </div>
+          <button class="btn btn-secondary" onclick="adminLogout()">Lock &amp; Sign Out</button>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-bottom:14px;color:var(--cyan);">1. Autonomous Campaign &amp; Task Builder</h3>
+          <div class="grid-2">
+            <div class="field"><label>Campaign Title</label><input id="qTitle" placeholder="e.g. NovaPay Beta Install Sprint" /></div>
+            <div class="field"><label>Brand / Partner</label><input id="qBrand" placeholder="e.g. NovaPay" /></div>
+            <div class="field"><label>Sector</label><select id="qSector"><option>Gaming</option><option>AI</option><option>Web3</option><option>Fintech</option><option>Web2 Tech</option></select></div>
+            <div class="field"><label>Status</label><select id="qStatus"><option>LIVE</option><option>UPCOMING</option><option>ENDED</option></select></div>
+            <div class="field"><label>Prize Pool (USD, 0 for XP-only)</label><input id="qUsd" type="number" value="500" /></div>
+            <div class="field"><label>XP Reward</label><input id="qXp" type="number" value="2000" /></div>
+            <div class="field"><label>Duration</label><input id="qDuration" value="7 Days" /></div>
+            <div class="field"><label>NDA Protected?</label><select id="qNda"><option value="false">No</option><option value="true">Yes (Undisclosed)</option></select></div>
+          </div>
+          <div class="field"><label>Campaign Summary</label><textarea id="qSummary" rows="2" placeholder="Describe deliverables and human verification rules..."></textarea></div>
+
+          <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:14px;">
+            <h4 style="margin-bottom:10px;">Auto-Generate Social Follow &amp; Verify Tasks</h4>
+            <div class="grid-2">
+              <div class="field">
+                <label>Platform</label>
+                <select id="socPlatform">
+                  <option>X (Twitter) Profile</option>
+                  <option>X (Twitter) Post (Like/Repost/Reply)</option>
+                  <option>Instagram</option>
+                  <option>Telegram Channel</option>
+                  <option>Discord Server</option>
+                  <option>YouTube</option>
+                  <option>TikTok</option>
+                  <option>Website / App Store URL</option>
+                </select>
+              </div>
+              <div class="field"><label>Project URL</label><input id="socUrl" placeholder="https://x.com/project" /></div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addSocialAutoTask()">YES — Add Follow &amp; Verify Task</button>
+          </div>
+
+          <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:16px;">
+            <h4 style="margin-bottom:10px;">KGeN-Style Modular Tasks</h4>
+            <div class="grid-2">
+              <div class="field">
+                <label>Task Module Type</label>
+                <select id="modType">
+                  <option value="clan_referral">Clan / Referral Code Growth</option>
+                  <option value="app_download">App Download &amp; Signup Proof</option>
+                  <option value="ingame_milestone">In-Game Milestone / UID Check</option>
+                  <option value="voting_poll">Creator Award / Voting Poll</option>
+                  <option value="daily_checkin">Daily Check-In Streak</option>
+                  <option value="site_visit">15s Website Visit Verification</option>
+                  <option value="ai_capture">Voice / Video AI Data Capture</option>
+                  <option value="quiz">Auto-Graded Knowledge Quiz</option>
+                  <option value="secret_keyword">Secret Keyword Gate</option>
+                  <option value="ugc_proof">UGC Video / Thread Submission</option>
+                  <option value="onchain_check">On-Chain Wallet Verification</option>
+                </select>
+              </div>
+              <div class="field"><label>Task Label</label><input id="modTitle" placeholder="e.g. Reach Level 5 &amp; submit UID" /></div>
+              <div class="field"><label>XP Value</label><input id="modXp" type="number" value="500" /></div>
+              <div class="field"><label>Target Link / Keyword (Optional)</label><input id="modMeta" placeholder="URL or secret keyword" /></div>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="addModularTask()">+ Add Modular Task to Stack</button>
+          </div>
+
+          <div id="builderTaskStack" style="margin:14px 0;"></div>
+          <button type="button" class="btn btn-coral" onclick="publishAdminQuest()">Publish Campaign Live</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3 style="margin-bottom:12px;">2. Manage Live &amp; Ended Quests</h3>
+            <div id="adminQuestList"></div>
+          </div>
+          <div class="panel">
+            <h3 style="margin-bottom:12px;">3. Scout QA Queue &amp; Brand Briefs</h3>
+            <div id="adminQaList"></div>
+            <h4 style="margin:16px 0 8px;color:var(--cyan);">Brand Briefs (ampyflybusiness@gmail.com)</h4>
+            <div id="adminBriefList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (Zero Admin Links) -->
+  <footer class="site-footer">
+    <div>© 2026 <strong>AMPYFLY</strong> — Verified Human Growth Infrastructure.</div>
+    <a class="x-link" href="https://x.com/AMPYFLY" target="_blank" rel="noopener noreferrer">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      <span>@AMPYFLY</span>
+    </a>
+  </footer>
+
+  <!-- COMPACT FROSTED-GLASS IPHONE BOTTOM NAVIGATION DOCK -->
+  <nav class="dock-wrap" aria-label="Primary Navigation">
+    <div class="glass-dock">
+      <button class="dock-item active" data-tab="home" onclick="switchView('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6.5h-5V21H4a1 1 0 0 1-1-1z"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="dock-item" data-tab="quests" onclick="switchView('quests')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>Quests</span>
+      </button>
+      <button class="dock-item" data-tab="alpha" onclick="switchView('alpha')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5" fill="currentColor"/></svg>
+        <span>Alpha</span>
+      </button>
+      <button class="dock-item" data-tab="profile" onclick="switchView('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/></svg>
+        <span>Profile</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- SETTINGS DRAWER (No Admin Link) -->
+  <div class="overlay" id="settingsOverlay" onclick="if(event.target===this) closeSettings()">
+    <aside class="drawer">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+        <h3>Settings &amp; Account</h3>
+        <button class="btn btn-secondary" style="padding:6px 12px;" onclick="closeSettings()">Close</button>
+      </div>
+
+      <div id="authBox" class="panel"></div>
+
+      <div id="profileSettingsForm" style="display:none;">
+        <div class="panel">
+          <h4 style="margin-bottom:10px;color:var(--cyan);">Profile Update</h4>
+          <div class="field"><label>Display Name</label><input id="setName" /></div>
+          <div class="field"><label>Bio</label><input id="setBio" /></div>
+        </div>
+        <div class="panel">
+          <h4 style="margin-bottom:10px;color:var(--cyan);">Payout Wallets (1-to-1 Lock)</h4>
+          <div class="field"><label>Base / EVM USDC Wallet</label><input id="setBase" placeholder="0x..." /></div>
+          <div class="field"><label>Solana Address</label><input id="setSol" placeholder="Solana wallet..." /></div>
+          <div class="field"><label>Fiat / Instant Payout ID</label><input id="setFiat" placeholder="Bank or Payout tag" /></div>
+        </div>
+        <div class="panel">
+          <h4 style="margin-bottom:10px;color:var(--cyan);">Connected Socials</h4>
+          <div class="field"><label>X (Twitter)</label><input id="setX" placeholder="@username" /></div>
+          <div class="field"><label>Telegram</label><input id="setTg" placeholder="@username" /></div>
+          <div class="field"><label>Discord</label><input id="setDiscord" placeholder="username" /></div>
+          <div class="field"><label>WhatsApp</label><input id="setWa" placeholder="+234..." /></div>
+          <button class="btn btn-primary" style="width:100%;" onclick="saveProfileSettings()">Save Settings</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <button class="btn btn-secondary" style="width:100%;margin-bottom:10px;" onclick="closeSettings(); switchView('brands');">For Brands — Launch a Sprint</button>
+        <button id="signOutBtn" class="btn btn-coral" style="width:100%;display:none;" onclick="userLogout()">Sign Out</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- QUEST DETAIL MODAL -->
+  <div class="modal-wrap" id="questModal" onclick="if(event.target===this) closeQuestModal()">
+    <div class="modal" id="questModalBody"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const state = {
+      user: null,
+      quests: [],
+      alpha: [],
+      filter: 'ALL',
+      activeQuest: null,
+      completedTasks: {},
+      builderTasks: [],
+      isAdmin: false
+    };
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    function formatReward(q) {
+      const usd = Number(q.prize_usd || 0);
+      const xp = Number(q.prize_xp || 0);
+      if (usd > 0 && xp > 0) return `$${usd.toLocaleString()} + ${xp.toLocaleString()} XP`;
+      if (usd > 0) return `$${usd.toLocaleString()}`;
+      return `${xp.toLocaleString()} XP`;
+    }
+
+    function switchView(name) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const target = document.getElementById(`view-${name}`);
+      if (target) target.classList.add('active');
+      document.querySelectorAll('.dock-item').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === name);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (name === 'ops') checkAdminSession();
+    }
+
+    function checkHashRoute() {
+      if (window.location.hash === '#ops') {
+        switchView('ops');
+      }
+    }
+    window.addEventListener('hashchange', checkHashRoute);
+
+    async function api(url, opts = {}) {
+      const res = await fetch(url, {
+        headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
+        credentials: 'include',
+        ...opts
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      return data;
+    }
+
+    async function bootstrap() {
+      try {
+        const [meRes, qRes, aRes] = await Promise.all([
+          api('/api/auth/me'),
+          api('/api/quests'),
+          api('/api/alpha')
+        ]);
+        state.user = meRes.user;
+        state.quests = qRes.quests || [];
+        state.alpha = aRes.posts || [];
+      } catch (e) {
+        console.warn('API unavailable:', e.message);
+      }
+      renderAll();
+      checkHashRoute();
+    }
+
+    function renderAll() {
+      const xp = state.user ? Number(state.user.xp || 0) : 0;
+      const usd = state.user ? Number(state.user.earned_usd || 0) : 0;
+      document.getElementById('topXp').textContent = `⚡ ${xp.toLocaleString()} XP`;
+      document.getElementById('topUsd').textContent = `$${usd.toFixed(2)}`;
+      renderDeck();
+      renderQuestGrids();
+      renderAlpha();
+      renderProfile();
+      renderSettingsContent();
+    }
+
+    function renderDeck() {
+      const deck = document.getElementById('fannedDeck');
+      const featured = state.quests.slice(0, 5);
+      deck.innerHTML = featured.map(q => `
+        <button class="deck-card" onclick="openQuestModal('${q.id}')">
+          <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+            <span class="status-chip status-${q.status}">${q.status}</span>
+            <span style="font-size:11px;font-weight:700;color:#CBD5E1;">${q.duration}</span>
+          </div>
+          <div>
+            <div style="font-size:11px;text-transform:uppercase;color:var(--cyan);font-weight:800;margin-bottom:4px;">${q.sector}</div>
+            <div class="display" style="font-size:17px;font-weight:800;line-height:1.2;margin-bottom:10px;">${q.title}</div>
+            <div style="font-size:13px;font-weight:800;color:#FFFFFF;">${formatReward(q)}</div>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function questCardHTML(q) {
+      const ctaClass = q.status === 'LIVE' ? 'cta-live' : q.status === 'ENDED' ? 'cta-ended' : 'cta-upcoming';
+      const ctaLabel = q.status === 'LIVE' ? 'Enter Live Sprint' : q.status === 'ENDED' ? 'View Audit Proof' : 'Preview Upcoming';
+      return `
+        <article class="ticket-card">
+          <div class="ticket-top">
+            <div class="ticket-meta">
+              <span class="status-chip status-${q.status}">${q.status}</span>
+              <span style="font-size:12px;color:var(--muted);font-weight:600;">${q.sector} • ${q.duration}</span>
+            </div>
+            <h3 class="ticket-title">${q.title}</h3>
+            <p class="ticket-desc">${q.summary}</p>
+          </div>
+          <div class="ticket-bottom">
+            <div class="ticket-stats">
+              <div>
+                <div class="reward-big">${formatReward(q)}</div>
+                <div class="ticket-sub">${Number(q.participants || 0).toLocaleString()} Participants${q.nda_protected ? ' • NDA' : ''}</div>
+              </div>
+            </div>
+            <button class="ticket-cta ${ctaClass}" onclick="openQuestModal('${q.id}')">${ctaLabel}</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function setQuestFilter(f, el) {
+      state.filter = f;
+      document.querySelectorAll('#questFilters .filter-pill').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderQuestGrids();
+    }
+
+    function renderQuestGrids() {
+      document.getElementById('homeQuestGrid').innerHTML = state.quests.slice(0, 6).map(questCardHTML).join('');
+      const filtered = state.filter === 'ALL' ? state.quests : state.quests.filter(q => q.status === state.filter);
+      document.getElementById('allQuestGrid').innerHTML = filtered.map(questCardHTML).join('');
+    }
+
+    function openQuestModal(id) {
+      const q = state.quests.find(x => x.id === id);
+      if (!q) return;
+      state.activeQuest = q;
+      const doneSet = state.completedTasks[q.id] || [];
+      const tasks = Array.isArray(q.tasks) ? q.tasks : [];
+
+      document.getElementById('questModalBody').innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;">
+          <div>
+            <span class="status-chip status-${q.status}">${q.status}</span>
+            <h2 style="margin-top:8px;">${q.title}</h2>
+            <p style="color:var(--cyan);font-weight:700;margin-top:4px;">${formatReward(q)} • ${q.duration}</p>
+          </div>
+          <button class="btn btn-secondary" style="padding:6px 12px;" onclick="closeQuestModal()">✕</button>
+        </div>
+        <p style="color:#CBD5E1;font-size:14px;line-height:1.55;margin-bottom:16px;">${q.summary}</p>
+
+        <h4 style="margin-bottom:10px;">Modular Tasks (${tasks.length})</h4>
+        ${tasks.map(t => {
+          const isDone = doneSet.includes(t.id);
+          return `
+            <div class="task-row ${isDone ? 'done' : ''}">
+              <div>
+                <div style="font-weight:700;font-size:14px;">${t.title}</div>
+                <div style="font-size:12px;color:var(--muted);">${t.platform || t.type} • ${t.verifyMode || 'Verified'} • +${t.xp || 0} XP</div>
+              </div>
+              ${q.status === 'LIVE' ? `
+                <button class="btn ${isDone ? 'btn-secondary' : 'btn-primary'}" style="padding:7px 12px;font-size:12px;" onclick="toggleQuestTask('${q.id}','${t.id}','${t.url || ''}')">
+                  ${isDone ? 'Verified ✓' : 'Verify'}
+                </button>
+              ` : `<span style="font-size:12px;color:var(--muted);font-weight:700;">${q.status}</span>`}
+            </div>
+          `;
+        }).join('')}
+
+        ${q.status === 'LIVE' ? `
+          <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
+            <div class="field"><label>Proof Link / Post URL</label><input id="subProofUrl" placeholder="https://x.com/yourhandle/status/..." /></div>
+            <div class="field"><label>Notes / Referral Handle</label><input id="subProofNote" placeholder="Optional clan ID or note..." /></div>
+            <button class="btn btn-coral" style="width:100%;" onclick="submitQuestProof('${q.id}')">Submit Sprint Proof for Audit</button>
+          </div>
+        ` : `
+          <div class="panel" style="margin-top:14px;margin-bottom:0;">
+            <strong>Audit Snapshot:</strong> ${Number(q.participants).toLocaleString()} participants • ${Number(q.approved_count || q.participants).toLocaleString()} verified approvals.
+          </div>
+        `}
+      `;
+      document.getElementById('questModal').classList.add('open');
+    }
+
+    function closeQuestModal() {
+      document.getElementById('questModal').classList.remove('open');
+    }
+
+    function toggleQuestTask(qId, tId, url) {
+      if (url && url.startsWith('http')) window.open(url, '_blank', 'noopener');
+      if (!state.completedTasks[qId]) state.completedTasks[qId] = [];
+      if (!state.completedTasks[qId].includes(tId)) {
+        state.completedTasks[qId].push(tId);
+        showToast('Task verified!');
+      }
+      openQuestModal(qId);
+    }
+
+    async function submitQuestProof(qId) {
+      const proof_url = document.getElementById('subProofUrl').value.trim();
+      const proof_note = document.getElementById('subProofNote').value.trim();
+      if (!proof_url) return showToast('Enter a proof link first.');
+      try {
+        await api('/api/submissions', {
+          method: 'POST',
+          body: JSON.stringify({
+            quest_id: qId,
+            proof_url,
+            proof_note,
+            completed_task_ids: state.completedTasks[qId] || [],
+            user_handle: state.user?.handle || '@guest'
+          })
+        });
+        showToast('Proof submitted to AMP Scout QA queue!');
+        closeQuestModal();
+        bootstrap();
+      } catch (e) {
+        showToast(e.message);
+      }
+    }
+
+    // Alpha Feed
+    function renderAlpha() {
+      const list = document.getElementById('alphaList');
+      list.innerHTML = state.alpha.map(a => `
+        <article class="alpha-card">
+          <div class="alpha-head">
+            <div>
+              <strong>${a.author_name}</strong> <span style="color:var(--muted);font-size:13px;">${a.author_handle}</span>
+            </div>
+            <span class="status-chip status-LIVE">${a.sector}</span>
+          </div>
+          <p style="font-size:14px;line-height:1.6;color:#E2E8F0;margin-bottom:12px;">${a.content}</p>
+          <button class="upvote-btn" onclick="upvoteAlpha('${a.id}')">▲ ${a.upvotes} Signal</button>
+        </article>
+      `).join('');
+    }
+
+    async function publishAlpha() {
+      const content = document.getElementById('alphaInput').value.trim();
+      const sector = document.getElementById('alphaSector').value;
+      const author_handle = document.getElementById('alphaHandle').value.trim() || state.user?.handle || '@explorer';
+      if (content.length < 8) return showToast('Write at least 8 characters of Alpha.');
+      try {
+        await api('/api/alpha', {
+          method: 'POST',
+          body: JSON.stringify({ sector, content, author_name: state.user?.display_name || author_handle, author_handle })
+        });
+        document.getElementById('alphaInput').value = '';
+        showToast('Alpha published (+50 XP)!');
+        bootstrap();
+      } catch (e) {
+        showToast(e.message);
+      }
+    }
+
+    async function upvoteAlpha(id) {
+      try {
+        await api(`/api/alpha/${id}/upvote`, { method: 'POST' });
+        bootstrap();
+      } catch {}
+    }
+
+    // Profile View
+    function renderProfile() {
+      const u = state.user;
+      document.getElementById('profileHero').innerHTML = u ? `
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2>${u.display_name}</h2>
+            <p style="color:var(--cyan);font-weight:700;">${u.handle} • Tier ${u.trust_tier || 1}</p>
+            <p style="color:#CBD5E1;font-size:14px;margin-top:6px;">${u.bio || 'AMPYFLY Community Member'}</p>
+          </div>
+          <button class="btn btn-secondary" onclick="openSettings()">Edit Profile &amp; Wallets</button>
+        </div>
+      ` : `
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2>Create Your AMPYFLY Pass</h2>
+            <p style="color:#CBD5E1;font-size:14px;margin-top:6px;">Sign in to track your XP, lock payout wallets, and claim verified sprint rewards.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openSettings()">Sign In / Register</button>
+        </div>
+      `;
+
+      document.getElementById('profileKpis').innerHTML = `
+        <div class="kpi-box"><div class="kpi-val">${u ? Number(u.xp || 0).toLocaleString() : 0} XP</div><div class="kpi-lbl">Season 1 Reputation</div></div>
+        <div class="kpi-box"><div class="kpi-val">$${u ? Number(u.earned_usd || 0).toFixed(2) : '0.00'}</div><div class="kpi-lbl">Verified Payouts</div></div>
+        <div class="kpi-box"><div class="kpi-val">${u?.wallets?.baseUsdc ? 'LOCKED' : 'UNSET'}</div><div class="kpi-lbl">1-to-1 Payout Rail</div></div>
+      `;
+    }
+
+    // Settings Drawer
+    function openSettings() { document.getElementById('settingsOverlay').classList.add('open'); renderSettingsContent(); }
+    function closeSettings() { document.getElementById('settingsOverlay').classList.remove('open'); }
+
+    function renderSettingsContent() {
+      const u = state.user;
+      const authBox = document.getElementById('authBox');
+      const formWrap = document.getElementById('profileSettingsForm');
+      const signOutBtn = document.getElementById('signOutBtn');
+
+      if (!u) {
+        formWrap.style.display = 'none';
+        signOutBtn.style.display = 'none';
+        authBox.innerHTML = `
+          <h4 style="margin-bottom:10px;color:var(--cyan);">Sign In or Create Account</h4>
+          <div class="field"><label>Email</label><input id="uEmail" type="email" placeholder="you@email.com" /></div>
+          <div class="field"><label>Password</label><input id="uPass" type="password" placeholder="6+ characters" /></div>
+          <div class="field"><label>Display Name (New Accounts)</label><input id="uName" placeholder="Your Name" /></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary" style="flex:1;" onclick="userAuth('login')">Sign In</button>
+            <button class="btn btn-secondary" style="flex:1;" onclick="userAuth('register')">Register</button>
+          </div>
+        `;
+      } else {
+        authBox.innerHTML = `<div style="font-size:14px;">Signed in as <strong>${u.display_name}</strong> (${u.email})</div>`;
+        formWrap.style.display = 'block';
+        signOutBtn.style.display = 'block';
+        document.getElementById('setName').value = u.display_name || '';
+        document.getElementById('setBio').value = u.bio || '';
+        document.getElementById('setBase').value = u.wallets?.baseUsdc || '';
+        document.getElementById('setSol').value = u.wallets?.solana || '';
+        document.getElementById('setFiat').value = u.wallets?.fiatRail || '';
+        document.getElementById('setX').value = u.socials?.x || '';
+        document.getElementById('setTg').value = u.socials?.telegram || '';
+        document.getElementById('setDiscord').value = u.socials?.discord || '';
+        document.getElementById('setWa').value = u.socials?.whatsapp || '';
+      }
+    }
+
+    async function userAuth(mode) {
+      const email = document.getElementById('uEmail').value.trim();
+      const password = document.getElementById('uPass').value;
+      const displayName = document.getElementById('uName').value.trim();
+      try {
+        const res = await api(`/api/auth/${mode}`, {
+          method: 'POST',
+          body: JSON.stringify({ email, password, displayName })
+        });
+        state.user = res.user;
+        showToast(mode === 'login' ? 'Welcome back!' : 'Account created!');
+        renderAll();
+      } catch (e) {
+        showToast(e.message);
+      }
+    }
+
+    async function saveProfileSettings() {
+      try {
+        const res = await api('/api/auth/profile', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            display_name: document.getElementById('setName').value.trim(),
+            bio: document.getElementById('setBio').value.trim(),
+            wallets: {
+              baseUsdc: document.getElementById('setBase').value.trim(),
+              solana: document.getElementById('setSol').value.trim(),
+              fiatRail: document.getElementById('setFiat').value.trim()
+            },
+            socials: {
+              x: document.getElementById('setX').value.trim(),
+              telegram: document.getElementById('setTg').value.trim(),
+              discord: document.getElementById('setDiscord').value.trim(),
+              whatsapp: document.getElementById('setWa').value.trim()
+            }
+          })
+        });
+        state.user = res.user;
+        showToast('Settings saved!');
+        renderAll();
+      } catch (e) {
+        showToast(e.message);
+      }
+    }
+
+    async function userLogout() {
+      await api('/api/auth/logout', { method: 'POST' });
+      state.user = null;
+      showToast('Signed out.');
+      renderAll();
+    }
+
+    async function submitBrief(e) {
+      e.preventDefault();
+      const payload = {
+        company: document.getElementById('bCompany').value.trim(),
+        email: document.getElementById('bEmail').value.trim(),
+        sector: document.getElementById('bSector').value,
+        package_type: document.getElementById('bPkg').value,
+        budget: document.getElementById('bBudget').value.trim(),
+        timeline: document.getElementById('bTimeline').value.trim(),
+        goal: document.getElementById('bGoal').value.trim()
+      };
+      try {
+        await api('/api/briefs', { method: 'POST', body: JSON.stringify(payload) });
+        fetch('https://formsubmit.co/ajax/ampyflybusiness@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ _subject: `AMPYFLY Brief: ${payload.company}`, ...payload })
+        }).catch(() => {});
+        e.target.reset();
+        showToast('Campaign brief sent to ampyflybusiness@gmail.com!');
+      } catch (err) {
+        showToast(err.message);
+      }
+    }
+
+    // ---------- Hidden Admin (#ops) Functions ----------
+    async function checkAdminSession() {
+      try {
+        const res = await api('/api/admin/me');
+        state.isAdmin = Boolean(res.authenticated);
+        document.getElementById('adminLoginGate').style.display = state.isAdmin ? 'none' : 'block';
+        document.getElementById('adminWorkspace').style.display = state.isAdmin ? 'block' : 'none';
+        if (state.isAdmin) loadAdminOverview();
+      } catch {}
+    }
+
+    async function adminLogin(e) {
+      e.preventDefault();
+      try {
+        await api('/api/admin/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            email: document.getElementById('admEmail').value.trim(),
+            password: document.getElementById('admPass').value
+          })
+        });
+        document.getElementById('admPass').value = '';
+        showToast('Ops Command unlocked.');
+        checkAdminSession();
+      } catch (err) {
+        showToast(err.message);
+      }
+    }
+
+    async function adminLogout() {
+      await api('/api/admin/logout', { method: 'POST' });
+      state.isAdmin = false;
+      window.location.hash = '';
+      switchView('home');
+      showToast('Admin locked.');
+    }
+
+    function addSocialAutoTask() {
+      const platform = document.getElementById('socPlatform').value;
+      const url = document.getElementById('socUrl').value.trim();
+      if (!url) return showToast('Enter a project URL first.');
+      state.builderTasks.push({
+        id: 't_' + Date.now().toString(36),
+        type: 'social_follow',
+        platform,
+        title: `Follow & Verify on ${platform}`,
+        url,
+        xp: 500,
+        verifyMode: 'Follow & Verify'
+      });
+      document.getElementById('socUrl').value = '';
+      renderBuilderTasks();
+    }
+
+    function addModularTask() {
+      const type = document.getElementById('modType').value;
+      const title = document.getElementById('modTitle').value.trim();
+      const xp = Number(document.getElementById('modXp').value || 500);
+      const meta = document.getElementById('modMeta').value.trim();
+      if (!title) return showToast('Enter a task label.');
+      state.builderTasks.push({
+        id: 'm_' + Date.now().toString(36),
+        type,
+        platform: type.replace('_', ' ').toUpperCase(),
+        title,
+        url: meta.startsWith('http') ? meta : '',
+        keyword: !meta.startsWith('http') ? meta : '',
+        xp,
+        verifyMode: 'Modular Audit'
+      });
+      document.getElementById('modTitle').value = '';
+      document.getElementById('modMeta').value = '';
+      renderBuilderTasks();
+    }
+
+    function renderBuilderTasks() {
+      document.getElementById('builderTaskStack').innerHTML = state.builderTasks.map((t, idx) => `
+        <div class="task-row">
+          <div><strong>${t.title}</strong><div style="font-size:12px;color:var(--muted);">${t.platform} • +${t.xp} XP ${t.url ? '• ' + t.url : ''}</div></div>
+          <button class="btn btn-secondary" style="padding:5px 10px;font-size:12px;" onclick="state.builderTasks.splice(${idx},1);renderBuilderTasks();">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    async function publishAdminQuest() {
+      const title = document.getElementById('qTitle').value.trim();
+      if (!title) return showToast('Campaign title is required.');
+      try {
+        await api('/api/admin/quests', {
+          method: 'POST',
+          body: JSON.stringify({
+            title,
+            brand: document.getElementById('qBrand').value.trim() || 'Partner',
+            sector: document.getElementById('qSector').value,
+            status: document.getElementById('qStatus').value,
+            prize_usd: Number(document.getElementById('qUsd').value || 0),
+            prize_xp: Number(document.getElementById('qXp').value || 0),
+            duration: document.getElementById('qDuration').value.trim() || '7 Days',
+            nda_protected: document.getElementById('qNda').value === 'true',
+            summary: document.getElementById('qSummary').value.trim() || 'Verified AMPYFLY growth sprint.',
+            tasks: state.builderTasks
+          })
+        });
+        state.builderTasks = [];
+        document.getElementById('qTitle').value = '';
+        renderBuilderTasks();
+        showToast('Campaign published live!');
+        await bootstrap();
+        loadAdminOverview();
+      } catch (e) {
+        showToast(e.message);
+      }
+    }
+
+    async function loadAdminOverview() {
+      const data = await api('/api/admin/overview');
+      document.getElementById('adminQuestList').innerHTML = state.quests.map(q => `
+        <div class="task-row">
+          <div><strong>${q.title}</strong><div style="font-size:12px;color:var(--muted);">${q.status} • ${formatReward(q)}</div></div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-secondary" style="padding:5px 8px;font-size:11px;" onclick="toggleQuestStatus('${q.id}','${q.status === 'LIVE' ? 'ENDED' : 'LIVE'}')">${q.status === 'LIVE' ? 'End' : 'Go Live'}</button>
+            <button class="btn btn-coral" style="padding:5px 8px;font-size:11px;" onclick="deleteQuest('${q.id}')">Del</button>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('adminQaList').innerHTML = (data.submissions || []).length ? data.submissions.map(s => `
+        <div class="task-row">
+          <div style="overflow:hidden;"><strong>${s.user_handle}</strong> (${s.status})<div style="font-size:12px;color:var(--muted);word-break:break-all;">${s.proof_url}</div></div>
+          ${s.status === 'PENDING' ? `
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-primary" style="padding:5px 8px;font-size:11px;" onclick="reviewSub('${s.id}','APPROVED')">Approve</button>
+              <button class="btn btn-coral" style="padding:5px 8px;font-size:11px;" onclick="reviewSub('${s.id}','REJECTED')">Reject</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('') : '<p style="font-size:13px;color:var(--muted);">No submissions yet.</p>';
+
+      document.getElementById('adminBriefList').innerHTML = (data.briefs || []).length ? data.briefs.map(b => `
+        <div class="task-row">
+          <div><strong>${b.company}</strong> (${b.email})<div style="font-size:12px;color:var(--muted);">${b.package_type} • ${b.budget} • ${b.goal}</div></div>
+        </div>
+      `).join('') : '<p style="font-size:13px;color:var(--muted);">No brand briefs yet.</p>';
+    }
+
+    async function toggleQuestStatus(id, status) {
+      await api(`/api/admin/quests/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) });
+      await bootstrap();
+      loadAdminOverview();
+    }
+    async function deleteQuest(id) {
+      await api(`/api/admin/quests/${id}`, { method: 'DELETE' });
+      await bootstrap();
+      loadAdminOverview();
+    }
+    async function reviewSub(id, status) {
+      await api(`/api/admin/submissions/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) });
+      showToast(`Submission ${status.toLowerCase()}.`);
+      await bootstrap();
+      loadAdminOverview();
+    }
+
+    bootstrap();
+  </script>
+</body>
+</html>

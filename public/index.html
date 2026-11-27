@@ -687,6 +687,8 @@
           <div class="panel">
             <h3 style="margin-bottom:12px;">3. Scout QA Queue &amp; Brand Briefs</h3>
             <div id="adminQaList"></div>
+            <h4 style="margin:16px 0 8px;color:var(--cyan);">User Profiles</h4>
+            <div id="adminUserList"></div>
             <h4 style="margin:16px 0 8px;color:var(--cyan);">Brand Briefs (ampyflybusiness@gmail.com)</h4>
             <div id="adminBriefList"></div>
           </div>
@@ -1334,6 +1336,17 @@
           <div><strong>${b.company}</strong> (${b.email})<div style="font-size:12px;color:var(--muted);">${b.package_type} • ${b.budget} • ${b.goal}</div></div>
         </div>
       `).join('') : '<p style="font-size:13px;color:var(--muted);">No brand briefs yet.</p>';
+
+      const users = await api('/api/admin/users');
+      document.getElementById('adminUserList').innerHTML = (users.users || []).length ? users.users.map(u => `
+        <div class="task-row">
+          <div><strong>${u.display_name || '(no name)'}</strong> @${u.handle || '-'} • ${u.email}
+            <div style="font-size:12px;color:var(--muted);">XP ${u.xp ?? 0} • $${u.earned_usd ?? 0} • ${u.trust_tier || '-'} • joined ${u.created_at ? new Date(u.created_at).toISOString().slice(0,10) : '-'}</div>
+            <div style="font-size:12px;color:var(--muted);">${u.bio || '(no bio)'}</div>
+            <div style="font-size:12px;color:var(--muted);">Socials: ${JSON.stringify(u.socials || {})} • Wallets: ${JSON.stringify(u.wallets || {})}</div>
+          </div>
+        </div>
+      `).join('') : '<p style="font-size:13px;color:var(--muted);">No users yet.</p>';
     }
 
     async function toggleQuestStatus(id, status) {

@@ -584,6 +584,17 @@ app.post('/api/submissions', async (req, res) => {
   res.status(201).json({ submission: entry });
 });
 
+// Admin: user profiles, without password hashes.
+app.get('/api/admin/users', requireAdmin, async (req, res) => {
+  const cols = 'id, email, display_name, handle, bio, xp, earned_usd, trust_tier, wallets, socials, created_at';
+  if (usePg) {
+    const { rows } = await pool.query(`SELECT ${cols} FROM users ORDER BY created_at DESC LIMIT 500`);
+    return res.json({ users: rows });
+  }
+  const db = loadLocalDb();
+  res.json({ users: db.users.map(({ password_hash, ...u }) => u) });
+});
+
 app.get('/api/admin/overview', requireAdmin, async (req, res) => {
   if (usePg) {
     const [subs, briefs] = await Promise.all([

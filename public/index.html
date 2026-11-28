@@ -495,7 +495,8 @@
         display: flex; flex-direction: column; justify-content: flex-start; background: transparent; z-index: 60;
       }
       .glass-dock {
-        flex-direction: column; align-items: stretch; gap: 6px; width: 100%; height: 100vh;
+        position: relative; top: auto; bottom: auto; left: auto; right: auto;
+        flex-direction: column; align-items: stretch; gap: 6px; width: 100%; height: 100vh; min-height: 100vh;
         border-radius: 0; border: none; border-right: 1px solid var(--border);
         background: var(--abyss); box-shadow: none; padding: 24px 14px; overflow-y: auto;
       }

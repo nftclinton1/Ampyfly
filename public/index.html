@@ -167,17 +167,18 @@
       box-shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
       cursor: pointer;
       transition: transform 0.25s ease, z-index 0.2s;
-      margin-left: -24px;
+      margin-left: -10px;
       position: relative;
       text-align: left;
+      overflow: hidden;
     }
     .deck-card:first-child { margin-left: 0; }
-    .deck-card:nth-child(1) { transform: rotate(-6deg) translateY(14px); background: linear-gradient(155deg, #133558, #0A2540); }
-    .deck-card:nth-child(2) { transform: rotate(-3deg) translateY(5px); background: linear-gradient(155deg, #164E63, #0A2540); }
+    .deck-card:nth-child(1) { transform: rotate(-4deg) translateY(10px); background: linear-gradient(155deg, #133558, #0A2540); }
+    .deck-card:nth-child(2) { transform: rotate(-2deg) translateY(4px); background: linear-gradient(155deg, #164E63, #0A2540); }
     .deck-card:nth-child(3) { transform: translateY(-10px) scale(1.05); z-index: 4; background: linear-gradient(155deg, #0EA5E9, #0A2540); border-color: var(--cyan); }
-    .deck-card:nth-child(4) { transform: rotate(3deg) translateY(5px); background: linear-gradient(155deg, #7C2D12, #0A2540); }
-    .deck-card:nth-child(5) { transform: rotate(6deg) translateY(14px); background: linear-gradient(155deg, #1E1B4B, #0A2540); }
-    .deck-card:hover { transform: translateY(-18px) scale(1.07) rotate(0deg); z-index: 10; }
+    .deck-card:nth-child(4) { transform: rotate(2deg) translateY(4px); background: linear-gradient(155deg, #7C2D12, #0A2540); }
+    .deck-card:nth-child(5) { transform: rotate(4deg) translateY(10px); background: linear-gradient(155deg, #1E1B4B, #0A2540); }
+    .deck-card:hover { transform: translateY(-14px) scale(1.04) rotate(0deg); z-index: 10; }
     @media (max-width: 720px) {
       .fanned-deck { justify-content: flex-start; gap: 12px; padding-left: 4px; }
       .deck-card { margin-left: 0; transform: none !important; height: 220px; }
